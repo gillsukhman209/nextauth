@@ -2,6 +2,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -9,6 +10,10 @@ export default function Page() {
   const addUserToDB = async () => {
     if (session) {
       if (status === "authenticated") {
+        toast.error("Authenticated", {
+          duration: 5000,
+          position: "top-center",
+        });
         try {
           const postData = {
             email: session.user.email,
@@ -87,6 +92,8 @@ export default function Page() {
           </button>
         </div>
       )}
+
+      <Toaster></Toaster>
     </div>
   );
 }
